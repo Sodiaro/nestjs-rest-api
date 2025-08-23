@@ -4,6 +4,8 @@ import {
   Column,
   CreateDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Property } from './property.entity';
 
@@ -29,4 +31,8 @@ export class User {
 
   @OneToMany(() => Property, (property) => property.user)
   properties: Property[];
+
+  @ManyToMany(() => Property, (property) => property.likedBy)
+  @JoinTable({ name: 'user_liked_properties' })
+  likedProperties: Property[];
 }

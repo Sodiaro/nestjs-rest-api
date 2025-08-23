@@ -6,6 +6,7 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 import { PropertyFeature } from './propertyFeature.entity';
 import { User } from './user.entity';
@@ -34,4 +35,7 @@ export class Property {
   @ManyToOne(() => User, (user) => user.properties)
   @JoinColumn({ name: 'ownerId' })
   user: User;
+
+  @ManyToMany(() => User, (user) => user.likedProperties)
+  likedBy: User[];
 }
