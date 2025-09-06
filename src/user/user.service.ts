@@ -26,7 +26,6 @@ export class UserService {
   findAll() {
     return `This action returns all user`;
   }
-
   async findOne(id: number) {
     return this.UserRepo.findOne({
       where: { id },

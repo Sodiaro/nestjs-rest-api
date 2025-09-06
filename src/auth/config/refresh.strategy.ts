@@ -5,13 +5,14 @@ import { AuthJwtPayload } from '../types/auth-jwtPayload';
 import jwtConfig  from '../config/jwt.config';
 import { Inject, Injectable } from '@nestjs/common';
 import { AuthService } from '../auth.service';
+import refreshJwtConfig from '../config/refresh-jwt.config'
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class RefreshJwtStrategy extends PassportStrategy(Strategy, 'refresh-jwt') {
   constructor(
-    @Inject(jwtConfig.KEY)
+    @Inject(refreshJwtConfig.KEY)
     // private authService: AuthService,
-    private jwtConfiguration: ConfigType<typeof jwtConfig>,
+    private jwtConfiguration: ConfigType<typeof refreshJwtConfig>,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
