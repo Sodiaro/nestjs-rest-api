@@ -7,11 +7,13 @@ import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class UserService {
-
   constructor(@InjectRepository(User) private UserRepo: Repository<User>) {}
 
-  async updateHashedRefreshToken(userId: number, hashedRefreshToken: string | null) {
-    return await this.UserRepo.update({ id: userId}, { hashedRefreshToken})
+  async updateHashedRefreshToken(
+    userId: number,
+    hashedRefreshToken: string | null,
+  ) {
+    return await this.UserRepo.update({ id: userId }, { hashedRefreshToken });
   }
 
   // Hash the password before saving to the database
@@ -20,12 +22,12 @@ export class UserService {
     return await this.UserRepo.save(user);
   }
 
-  async findByEmail(email:string){
+  async findByEmail(email: string) {
     return await this.UserRepo.findOne({
       where: {
         email,
-      }
-    })
+      },
+    });
   }
 
   findAll() {
@@ -34,8 +36,15 @@ export class UserService {
   async findOne(id: number) {
     return this.UserRepo.findOne({
       where: { id },
-      select: ['firstName', 'lastName', 'avatarUrl', 'hashedRefreshToken'],
-    })
+      select: [
+        'id',
+        'firstName',
+        'lastName',
+        'avatarUrl',
+        'hashedRefreshToken',
+        'role',
+      ],
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

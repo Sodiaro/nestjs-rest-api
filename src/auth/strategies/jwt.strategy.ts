@@ -12,6 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     @Inject(jwtConfig.KEY)
     // private authService: AuthService,
     private jwtConfiguration: ConfigType<typeof jwtConfig>,
+    private authService: AuthService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -22,6 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   validate(payload: AuthJwtPayload) {
-      return { id: payload.sub };
+      const userId = payload.sub;
+      return this.authService.validateJwtUser(userId);
   }
 }
