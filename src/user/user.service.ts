@@ -9,6 +9,11 @@ import { User } from 'src/entities/user.entity';
 export class UserService {
 
   constructor(@InjectRepository(User) private UserRepo: Repository<User>) {}
+
+  async updateHashedRefreshToken(userId: number, hashedRefreshToken: string | null) {
+    return await this.UserRepo.update({ id: userId}, { hashedRefreshToken})
+  }
+
   // Hash the password before saving to the database
   async create(createUserDto: CreateUserDto) {
     const user = await this.UserRepo.create(createUserDto);
@@ -29,7 +34,7 @@ export class UserService {
   async findOne(id: number) {
     return this.UserRepo.findOne({
       where: { id },
-      select: ['firstName', 'lastName', 'avatarUrl'],
+      select: ['firstName', 'lastName', 'avatarUrl', 'hashedRefreshToken'],
     })
   }
 
