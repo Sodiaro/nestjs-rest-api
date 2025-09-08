@@ -41,8 +41,8 @@ export class UserController {
 
   // @SetMetadata('role', [Role.ADMIN])
   @Roles(Role.ADMIN)
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(RolesGuard)
+  // @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
